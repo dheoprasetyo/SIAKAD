@@ -18,6 +18,8 @@ Route::get('/mahasiswa/login','LoginMahasiswaController@index');
 Route::post('/mahasiswa/login','LoginMahasiswaController@submit');
 Route::get('/krs/listmatkulkrs','KrsController@listmatkulkrs');
 Route::get('/krs','KrsController@index');
+Route::get('/krs/tambahKrs','KrsController@tambahKrs');
+Route::get('/krs/tampilKrs','KrsController@tampilKrs');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

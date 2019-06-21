@@ -30,15 +30,9 @@
                             </table>
                         </div>
                         <div class="col-md-6">
-                            <h6>Daftar Matkul yang dipilih</h6>
-                            <hr>
-                            <table class="table table-bordered">
-                                <tr>
-                                    <th>Kode MK</th>
-                                    <th>Nama Matkul</th>
-                                    <th>SKS</th>
-                                </tr>
-                            </table>
+                                <h6>Daftar Matakuliah Yang Anda Pilih</h6>
+                                <hr>
+                                <div id="list"></div>
                         </div>
                     </div>
                 </div>
@@ -62,6 +56,31 @@ $(function() {
         ]
     });
 });
+</script>
+<script>
+    function tambah_krs(kode_mk){
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+        $.get("/krs/tambahKrs",
+        {
+          kode_mk : kode_mk,
+          _token: CSRF_TOKEN
+        },
+        function(data, status){
+          tampil_krs();
+      });
+    }
+
+    function tampil_krs(){
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        $.get("/krs/tampilKrs",
+        {
+          _token    :   CSRF_TOKEN
+        },
+        function(data, status){
+            $("#list").html(data);
+      });
+    }
 </script>
 @endpush
 
