@@ -109,4 +109,8 @@ class FakultasController extends Controller
         $fakultas->delete();
         return redirect('/fakultas')->with('status','Data Fakultas Berhasil Dihapus');
     }
+
+    function jadwal_mengajar(){
+        return view('dosen.jadwal_mengajar');
+    }
 }

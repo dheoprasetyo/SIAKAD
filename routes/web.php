@@ -16,6 +16,14 @@ Route::get('/', function () {
 });
 Route::get('/mahasiswa/login','LoginMahasiswaController@index');
 Route::post('/mahasiswa/login','LoginMahasiswaController@submit');
+Route::get('/dosen/login','LoginDosenController@index');
+Route::post('/dosen/login','LoginDosenController@submit');
+Route::get('jadwal_mengajar','DosenController@jadwal_mengajar');
+Route::get('jadwal_mengajar/json','DosenController@jadwal_mengajar_json');
+
+Route::get('nilai/{id}','NilaiController@index');
+Route::post('/nilai/update_nilai/update','NilaiController@update_nilai');
+
 Route::get('/krs/listmatkulkrs','KrsController@listmatkulkrs');
 Route::get('/krs','KrsController@index');
 Route::get('/krs/tambahKrs','KrsController@tambahKrs');

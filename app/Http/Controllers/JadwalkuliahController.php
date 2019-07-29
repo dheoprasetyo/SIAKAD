@@ -20,7 +20,7 @@ class JadwalkuliahController extends Controller
 
         $data['jadwal'] = \DB::table('jadwal_kuliah')
                     ->join('matakuliah','matakuliah.kode_mk','=','jadwal_kuliah.kode_mk')
-                    ->join('dosens','dosens.kode_dosen','=','jadwal_kuliah.kode_dosen')
+                    ->join('dosen','dosen.kode_dosen','=','jadwal_kuliah.kode_dosen')
                     ->join('ruangan','ruangan.kode_ruangan','=','jadwal_kuliah.kode_ruangan')
                     ->join('jam_kuliah','jam_kuliah.id','=','jadwal_kuliah.jam')
                     ->where('jadwal_kuliah.kode_jurusan',$jurusan)

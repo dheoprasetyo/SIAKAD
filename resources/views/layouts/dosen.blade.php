@@ -46,42 +46,23 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
-                        @guest
-                            
-                        @else
+                        
+                        
                         <li class="nav-item">
-                                <a class="nav-link" href="/mahasiswa"><i class="fas fa-cogs"></i> Mahasiswa</a>
+                                <a class="nav-link" href="/jadwal_mengajar"><i class="far fa-calendar-alt "></i>Jadwal Mengajar</a>
                         </li>
-                        <li class="nav-item">
-                                <a class="nav-link" href="/jadwalkuliah"><i class="fas fa-cogs"></i> Jadwal Kuliah</a>
-                        </li>
-                        <li class="nav-item">
-                                <a class="nav-link" href="/setting"><i class="fas fa-cogs"></i> Setting</a>
+<!--                         <li class="nav-item">
+                                <a class="nav-link" href="/tahunakademik">DNS</a>
                         </li>
                         <li class="nav-item">
-                                <a class="nav-link" href="/tahunakademik">Tahun Akademik</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fas fa-tv"></i> Data master
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                 
-                                  <a class="dropdown-item" href="/kurikulum"><i class="fas fa-atlas"></i> Kurikulum</a>
-                                  <a class="dropdown-item" href="/fakultas"><i class="fas fa-building"></i> Fakultas</a>
-                                  <a class="dropdown-item" href="/jurusan"><i class="fas fa-user-md"></i> Jurusan</a>
-                                  <a class="dropdown-item" href="/matakuliah"><i class="fas fa-book-open"></i> Matakuliah</a>
-                                  <a class="dropdown-item" href="/ruangan"><i class="fas fa-hotel"></i> Ruangan</a>
-                                  
-                                </div>
-                        </li>
-                        <li class="nav-item">
-                                <a class="nav-link" href="/dosen">Dosen</a>
-                        </li>
+                                <a class="nav-link" href="/tahunakademik">Isi KRS</a>
+                        </li> -->
+                        
+                       
                         
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                     Selamat Datang Dosen : <i class="fas fa-user"></i> <b>{{ Auth::guard('dosen')->user()->nama }}</b> <span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -96,7 +77,7 @@
                                     </form>
                                 </div>
                             </li>
-                        @endguest
+
                     </ul>
                 </div>
             </div>
@@ -108,7 +89,8 @@
     </div>
 
     <!-- jQuery -->
-        <script src="//code.jquery.com/jquery.js"></script>
+    <!-- <script src="//code.jquery.com/jquery.js"></script> -->
+        <script src="js/jquery-3.4.1.js"></script>
         <!-- DataTables -->
         <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
         <!-- Bootstrap JavaScript -->
@@ -118,3 +100,4 @@
 
 </body>
 </html>
+

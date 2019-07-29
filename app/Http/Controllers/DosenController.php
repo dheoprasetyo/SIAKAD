@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
+use Illuminate\Support\Facades\Hash;
 use App\Dosen;
+use Auth;
 
 class DosenController extends Controller
 {
 
     public function json(){
-        return DataTables::of(Dosen::all())
+        return DataTables::of(dosen::all())
         ->addColumn('action', function ($row) {
             $action  = '<a href="/dosen/'.$row->nidn.'/edit" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>';
             $action .= \Form::open(['url'=>'dosen/'.$row->nidn,'method'=>'delete','style'=>'float:right']);
@@ -49,13 +51,20 @@ class DosenController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nidn' => 'required|unique:dosens|min:10',
+            'nidn' => 'required|unique:dosen|min:10',
             'nama' => 'required|min:6',
-            'email'     =>'required|unique:dosens',
+            'email'     =>'required|unique:dosen',
             'no_hp'     =>'required'
         ]);
-        $dosen = New Dosen();
-        $dosen->create($request->all());
+        $dosen = New dosen();
+        $dosen->nidn        = $request->nidn;
+        $dosen->kode_dosen  = $request->kode_dosen;
+        $dosen->nama        = $request->nama;
+        $dosen->no_hp       = $request->no_hp;
+        $dosen->email       = $request->email;
+        // $dosen->kode_fakultas  = $request->kode_fakultas;
+        $dosen->password    = Hash::make($request->password);
+        $dosen->save();
         return redirect('/dosen')->with('status','Data Dosen Berhasil Disimpan');
     }
 
@@ -78,7 +87,7 @@ class DosenController extends Controller
      */
     public function edit($id)
     {
-        $data['dosen'] = Dosen::where('nidn',$id)->first();
+        $data['dosen'] = dosen::where('nidn',$id)->first();
         return view('dosen.edit',$data);
     }
 
@@ -96,8 +105,18 @@ class DosenController extends Controller
             'email'     =>'required',
             'no_hp'     =>'required'
         ]);
-        $dosen = Dosen::where('nidn','=',$nidn);
-        $dosen->update($request->except('_method','_token'));
+        $dosen = dosen::where('nidn',$nidn)->first();
+        $dosen->nidn        = $request->nidn;
+        $dosen->kode_dosen  = $request->kode_dosen;
+        $dosen->nama        = $request->nama;
+        $dosen->no_hp       = $request->no_hp;
+        // $dosen->kode_fakultas  = $request->kode_fakultas;
+        $dosen->email       = $request->email;
+        if($request->password!='')
+        {
+            $dosen->password    = Hash::make($request->password);
+        }
+        $dosen->update();
         return redirect('/dosen')->with('status','Data Dosen Berhasil Di Update');
     }
 
@@ -109,8 +128,30 @@ class DosenController extends Controller
      */
     public function destroy($nidn)
     {
-        $dosen = Dosen::where('nidn',$nidn);
+        $dosen = dosen::where('nidn',$nidn);
         $dosen->delete();
         return redirect('/dosen')->with('status','Data Dosen Berhasil Dihapus');
+    }
+
+    function jadwal_mengajar(){
+        return view('dosen.jadwal_mengajar');
+    }
+
+    function jadwal_mengajar_json(){
+        $jadwal = \DB::table('jadwal_kuliah')
+                ->join('ruangan','ruangan.kode_ruangan','=','jadwal_kuliah.kode_ruangan')
+                ->join('matakuliah','matakuliah.kode_mk','=','jadwal_kuliah.kode_mk')
+                ->join('jam_kuliah','jam_kuliah.id','=','jadwal_kuliah.jam')
+                ->join('jurusan','jurusan.kode_jurusan','=','jadwal_kuliah.kode_jurusan')
+                ->where('jadwal_kuliah.kode_dosen',Auth::guard('dosen')->user()->kode_dosen);
+
+       return Datatables::of($jadwal)
+        ->addColumn('action', function ($row) {
+            $action  = '<a href="/nilai/'.$row->id.'" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i>Nilai</a>';
+            // $action = "";
+            return $action;
+        })
+        ->make(true);
+
     }
 }

@@ -50,6 +50,11 @@ return [
             'driver' => 'session',
             'provider' => 'mahasiswa',
         ],
+
+        'dosen' => [
+            'driver' => 'session',
+            'provider' => 'dosen',
+        ],
     ],
 
     /*
@@ -78,6 +83,11 @@ return [
         'mahasiswa' => [
             'driver' => 'eloquent',
             'model' => App\Mahasiswa::class,
+        ],
+
+        'dosen' => [
+            'driver' => 'eloquent',
+            'model' => App\Dosen::class,
         ],
     ],
 
